@@ -1,9 +1,18 @@
 package eu.lindenbaum.kata.fringe;
 
+/**
+ * Recursive list, made of zero or more elements of the same type
+ */
 public interface List<A> {
+  /**
+   * List case, representing the empty list
+   */
   public static final class Nil<A> implements List<A> {
   }
 
+  /**
+   * List case, representing a pair of a head element and a tail list
+   */
   public static final class Cons<A> implements List<A> {
     public final A head;
     public final List<A> tail;
@@ -14,18 +23,21 @@ public interface List<A> {
     }
   }
 
-  public static <A> List<A> nil() {
-    return new Nil<>();
+  /**
+   * Construct a list from elements
+   */
+  @SafeVarargs
+  public static <A> List<A> list(A... elements) {
+    List<A> l = new Nil<>();
+    for (int i = elements.length; i-- > 0;) {
+      l = new Cons<>(elements[i], l);
+    }
+    return l;
   }
 
-  public static <A> List<A> cons(A head, List<A> tail) {
-    return new Cons<>(head, tail);
-  }
-
-  public static <A> List<A> ncons(A head) {
-    return cons(head, nil());
-  }
-
+  /**
+   * Append two lists
+   */
   public static <A> List<A> append(List<A> l1, List<A> l2) {
     if (l1 instanceof Nil) {
       return l2;
@@ -36,6 +48,9 @@ public interface List<A> {
     }
   }
 
+  /**
+   * Check two lists for equality
+   */
   public static <A> boolean eq(List<A> l1, List<A> l2) {
     if (l1 instanceof Nil) {
       return l2 instanceof Nil;
