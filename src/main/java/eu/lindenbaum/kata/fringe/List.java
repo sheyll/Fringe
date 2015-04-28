@@ -8,10 +8,22 @@ public interface List<A> {
     public final A head;
     public final List<A> tail;
 
-    public Cons(A head, List<A> tail) {
+    private Cons(A head, List<A> tail) {
       this.head = head;
       this.tail = tail;
     }
+  }
+
+  public static <A> List<A> nil() {
+    return new Nil<>();
+  }
+
+  public static <A> List<A> cons(A head, List<A> tail) {
+    return new Cons<>(head, tail);
+  }
+
+  public static <A> List<A> ncons(A head) {
+    return cons(head, nil());
   }
 
   public static <A> List<A> append(List<A> l1, List<A> l2) {

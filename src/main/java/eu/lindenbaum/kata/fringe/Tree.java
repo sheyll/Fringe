@@ -2,9 +2,7 @@ package eu.lindenbaum.kata.fringe;
 
 import static eu.lindenbaum.kata.fringe.List.append;
 import static eu.lindenbaum.kata.fringe.List.eq;
-
-import eu.lindenbaum.kata.fringe.List.Cons;
-import eu.lindenbaum.kata.fringe.List.Nil;
+import static eu.lindenbaum.kata.fringe.List.ncons;
 
 public interface Tree<A> {
   public static final class Leaf<A> implements Tree<A> {
@@ -28,7 +26,7 @@ public interface Tree<A> {
   public static <A> List<A> leaves(Tree<A> t) {
     if (t instanceof Leaf) {
       Leaf<A> l = (Leaf<A>) t;
-      return new Cons<A>(l.label, new Nil<A>()); // FIXME add cons, ncons to List, make constructor Cons(...) package private
+      return ncons(l.label);
     }
     else {
       Node<A> n = (Node<A>) t;
