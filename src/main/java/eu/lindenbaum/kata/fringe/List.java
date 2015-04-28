@@ -1,6 +1,19 @@
-package eu.lindenbaum.kata.fringe.list;
+package eu.lindenbaum.kata.fringe;
 
 public interface List<A> {
+  public static final class Nil<A> implements List<A> {
+  }
+
+  public static final class Cons<A> implements List<A> {
+    public final A head;
+    public final List<A> tail;
+
+    public Cons(A head, List<A> tail) {
+      this.head = head;
+      this.tail = tail;
+    }
+  }
+
   public static <A> List<A> append(List<A> l1, List<A> l2) {
     if (l1 instanceof Nil) {
       return l2;
