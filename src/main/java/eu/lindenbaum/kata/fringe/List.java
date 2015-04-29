@@ -26,13 +26,8 @@ public interface List<A> {
   /**
    * Construct a list from elements
    */
-  @SafeVarargs
-  public static <A> List<A> list(A... elements) {
-    List<A> l = new Nil<>();
-    for (int i = elements.length; i-- > 0;) {
-      l = new Cons<>(elements[i], l);
-    }
-    return l;
+  public static <A> List<A> singleton(A a) {
+    return new Cons<>(a, new Nil<>());
   }
 
   /**

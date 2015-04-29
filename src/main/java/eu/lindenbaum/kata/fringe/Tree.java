@@ -2,7 +2,7 @@ package eu.lindenbaum.kata.fringe;
 
 import static eu.lindenbaum.kata.fringe.List.append;
 import static eu.lindenbaum.kata.fringe.List.eq;
-import static eu.lindenbaum.kata.fringe.List.list;
+import static eu.lindenbaum.kata.fringe.List.singleton;
 
 // http://c2.com/cgi/wiki?SameFringeProblem
 //
@@ -79,7 +79,7 @@ public interface Tree<A> {
   public static <A> List<A> leaves(Tree<A> t) {
     if (t instanceof Leaf) {
       Leaf<A> l = (Leaf<A>) t;
-      return list(l.label);
+      return singleton(l.label);
     }
     else {
       Node<A> n = (Node<A>) t;
