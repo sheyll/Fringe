@@ -14,8 +14,8 @@ public interface List<A> {
    * List case, representing a pair of a head element and a tail list
    */
   public static final class Cons<A> implements List<A> {
-    public final A head;
-    public final List<A> tail;
+    private final A head;
+    private final List<A> tail;
 
     private Cons(A head, List<A> tail) {
       this.head = head;
