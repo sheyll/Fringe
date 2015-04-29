@@ -1,0 +1,26 @@
+<body>
+  <p>
+    In 1977, in the pages of the ACM SIGART Newsletter, a debate raged over whether
+    samefringe is the simplest problem that requires multiprocessing or CoRoutines
+    to easily solve... The samefringe problem is this: two binary trees have the
+    same fringe if they have exactly the same leaves reading from left to right.
+  </p>
+  <p>
+    The problem is easy to solve in Haskell, since non-strict evaluation does just
+    as much work as necessary to produce a result. 
+  </p>
+  <pre>
+    data Tree a = Leaf a | Node (Tree a) (Tree a)
+  
+    leaves :: Tree a -> [a]
+    leaves (Node left right) = leaves left ++ leaves right
+    leaves (Leaf a)          = [a]
+  
+    sameFringe :: (Eq a) => Tree a -> Tree a -> Bool
+    sameFringe a b           = leaves a == leaves b
+  </pre>
+  <p>
+    (taken from <a href="http://c2.com/cgi/wiki?SameFringeProblem">
+    http://c2.com/cgi/wiki?SameFringeProblem</a>)
+  </p>
+</body>

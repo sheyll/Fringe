@@ -35,7 +35,7 @@ import static eu.lindenbaum.kata.fringe.List.singleton;
  */
 public interface Tree<A> {
   /**
-   * Tree case, representing a leaf with a label of type A
+   * Tree case, representing a leaf with a label of type A.
    */
   public static final class Leaf<A> implements Tree<A> {
     private final A label;
@@ -46,7 +46,7 @@ public interface Tree<A> {
   }
 
   /**
-   * Tree case, representing a node with two child trees
+   * Tree case, representing a node with two child trees.
    */
   public static final class Node<A> implements Tree<A> {
     public final Tree<A> left;
@@ -84,20 +84,6 @@ public interface Tree<A> {
     else {
       Node<A> n = (Node<A>) t;
       return append(leaves(n.left), leaves(n.right));
-    }
-  }
-
-  /**
-   * Create a string representation from a tree
-   */
-  public static <A> String show(Tree<A> t) {
-    if (t instanceof Leaf) {
-      Leaf<A> l = (Leaf<A>) t;
-      return String.valueOf(l.label);
-    }
-    else {
-      Node<A> n = (Node<A>) t;
-      return "(" + show(n.left) + "." + show(n.right) + ")";
     }
   }
 

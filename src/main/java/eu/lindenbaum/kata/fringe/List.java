@@ -1,17 +1,17 @@
 package eu.lindenbaum.kata.fringe;
 
 /**
- * Recursive list, made of zero or more elements of the same type
+ * Recursive list, made of zero or more elements of the type A.
  */
 public interface List<A> {
   /**
-   * List case, representing the empty list
+   * List case, representing the empty list.
    */
   public static final class Nil<A> implements List<A> {
   }
 
   /**
-   * List case, representing a pair of a head element and a tail list
+   * List case, representing a pair of a head element and a tail list.
    */
   public static final class Cons<A> implements List<A> {
     private final A head;
