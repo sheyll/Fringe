@@ -1,2 +1,2 @@
 # Fringe
-Code Kata for discussing the fringe problem (enumerate leaves) for very large trees in Java
+Code Kata discussing the "samefringe" problem in Java
