@@ -4,38 +4,12 @@ import static eu.lindenbaum.kata.fringe.List.append;
 import static eu.lindenbaum.kata.fringe.List.eq;
 import static eu.lindenbaum.kata.fringe.List.singleton;
 
-// http://c2.com/cgi/wiki?SameFringeProblem
-//
-// data Tree a = Leaf a | Node (Tree a) (Tree a)
-//
-// leaves :: Tree a -> [a]
-// leaves (Node left right) = leaves left ++ leaves right
-// leaves (Leaf a) = [a]
-//
-// sameFringe :: (Eq a) => Tree a -> Tree a -> Bool
-// sameFringe a b = leaves a == leaves b
 /**
  * Binary tree data structure with leaf node labels of type A.
- * <p>
- * Same Fringe Problem and Haskell implementation taken from <a
- * href="http://c2.com/cgi/wiki?SameFringeProblem"
- * >http://c2.com/cgi/wiki?SameFringeProblem</a>.
- * </p>
- * 
- * <pre>
- * data Tree a = Leaf a | Node (Tree a) (Tree a)
- * 
- * leaves :: Tree a -> [a]
- * leaves (Node left right) = leaves left ++ leaves right
- * leaves (Leaf a) = [a]
- * 
- * sameFringe :: (Eq a) => Tree a -> Tree a -> Bool
- * sameFringe a b = leaves a == leaves b
- * </pre>
  */
 public interface Tree<A> {
   /**
-   * Tree case, representing a leaf with a label of type A.
+   * Tree case, representing a leaf with a label.
    */
   public static final class Leaf<A> implements Tree<A> {
     private final A label;
