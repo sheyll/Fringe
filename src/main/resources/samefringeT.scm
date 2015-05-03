@@ -22,8 +22,17 @@
 (define node->right cdr)
 
 ; continuations
+(define *ticks* 0)
+(define *answer* '())
+
 (define (apply-cont k val)
-  (k val))
+  (lambda ()
+    (set! *ticks* (+ *ticks* 1))
+    (k val)))
+
+(define (bounce thunk)
+  (if (procedure? thunk)
+      (bounce (thunk))))
 
 ; CPS style append
 (define (concatK l1 l2 k)
@@ -59,8 +68,13 @@
 
 ; direct style samefringe
 (define (sameFringe a b)
-  (sameFringeK a b (lambda (answer)
-                     answer)))
+  (set! *ticks* 0)
+  (bounce
+   (sameFringeK a b (lambda (answer)
+                      (set! *answer* answer)
+                      (display "ticks: ") (display *ticks*) (newline)
+                      '())))
+  *answer*)
 
 ; generator
 (define (generateRightishTree size)

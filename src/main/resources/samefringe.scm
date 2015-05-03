@@ -23,12 +23,18 @@
 (define (node->right x)
   (cdr x))
 
+; concat
+(define (concat l1 l2)
+  (if(null? l1)
+     l2
+     (cons (car l1) (concat (cdr l1) l2))))
+
 ; leaves
 (define (leaves x)
   (cond ((leaf? x)
          (list (leaf->label x)))
         ((node? x)
-         (append (leaves (node->left x))
+         (concat (leaves (node->left x))
                  (leaves (node->right x))))))
 
 ;; samefringe
@@ -49,16 +55,18 @@
       (Leaf 0)))
 
 ;; tests
+(define size 1000)
+
 (sameFringe  (Leaf 1)                                  (Leaf 1))
 
 (sameFringe  (Leaf 1)                                  (Leaf 2))
 
 (sameFringe  (Node (Leaf 1) (Node (Leaf 2) (Leaf 3)))  (Node (Node (Leaf 1) (Leaf 2)) (Leaf 3)))
 
-(sameFringe  (generateRightishTree 10000)              (generateRightishTree 10000))
+(sameFringe  (generateRightishTree size)              (generateRightishTree size))
 
-(sameFringe  (generateLeftishTree 10000)               (generateLeftishTree 10000))
+(sameFringe  (generateLeftishTree size)               (generateLeftishTree size))
 
-(sameFringe  (generateRightishTree 10000)              (generateLeftishTree 10000))
+(sameFringe  (generateRightishTree size)              (generateLeftishTree size))
 
-(sameFringe  (generateLeftishTree 10000)               (generateRightishTree 10000))
+(sameFringe  (generateLeftishTree size)               (generateRightishTree size))
