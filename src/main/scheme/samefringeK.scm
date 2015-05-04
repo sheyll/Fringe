@@ -25,7 +25,7 @@
 (define (apply-cont k val)
   (k val))
 
-; CPS style append
+; CPS style concat
 (define (concatK l1 l2 k)
   (if (null? l1)
       (apply-cont k l2)
@@ -55,7 +55,7 @@
 (define (sameFringeK a b k)
   (leavesK a (lambda (l1)
                (leavesK b (lambda (l2)
-                            (equal?K l1 l1 k))))))
+                            (equal?K l1 l2 k))))))
 
 ; direct style samefringe
 (define (sameFringe a b)
@@ -76,7 +76,7 @@
       (Leaf 0)))
 
 ;; tests
-(define size 1000)
+(define size 10000)
 
 (sameFringe  (Leaf 1)                                  (Leaf 1))
 

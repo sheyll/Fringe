@@ -64,7 +64,7 @@
 (define (sameFringeK a b k)
   (leavesK a (lambda (l1)
                (leavesK b (lambda (l2)
-                            (equal?K l1 l1 k))))))
+                            (equal?K l1 l2 k))))))
 
 ; direct style samefringe
 (define (sameFringe a b)
@@ -90,7 +90,7 @@
       (Leaf 0)))
 
 ;; tests
-(define size 1000)
+(define size 10000)
 
 (sameFringe  (Leaf 1)                                  (Leaf 1))
 

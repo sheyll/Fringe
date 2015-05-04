@@ -1,27 +1,25 @@
+;; functions
+(define (id x) x)
+
+(define (compose f g) (lambda (x) (f (g x))))
+
 ;; binary tree
 
 ; leaf
-(define (Leaf a)
-  a)
+(define Leaf id)
 
-(define (leaf? x)
-  (not (pair? x)))
+(define leaf? (compose not pair?))
 
-(define (leaf->label x)
-  x)
+(define leaf->label id)
 
 ; node
-(define (Node left right)
-  (cons left right))
+(define Node cons)
 
-(define (node? x)
-  (pair? x))
+(define node? pair?)
 
-(define (node->left x)
-  (car x))
+(define node->left car)
 
-(define (node->right x)
-  (cdr x))
+(define node->right cdr)
 
 ; concat
 (define (concat l1 l2)
@@ -37,11 +35,12 @@
          (concat (leaves (node->left x))
                  (leaves (node->right x))))))
 
-;; samefringe
+; samefringe
 (define (sameFringe a b)
   (equal? (leaves a)
           (leaves b)))
 
+; generator
 (define (generateRightishTree size)
   (define (generate current)
     (if (< current size)
@@ -55,7 +54,7 @@
       (Leaf 0)))
 
 ;; tests
-(define size 1000)
+(define size 10000)
 
 (sameFringe  (Leaf 1)                                  (Leaf 1))
 
