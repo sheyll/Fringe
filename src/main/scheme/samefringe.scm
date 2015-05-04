@@ -21,13 +21,13 @@
 
 (define node->right cdr)
 
-; concat
+; direct style concat
 (define (concat l1 l2)
   (if(null? l1)
      l2
      (cons (car l1) (concat (cdr l1) l2))))
 
-; leaves
+; direct style leaves
 (define (leaves x)
   (cond ((leaf? x)
          (list (leaf->label x)))
@@ -35,10 +35,17 @@
          (concat (leaves (node->left x))
                  (leaves (node->right x))))))
 
-; samefringe
+; direct style same?
+(define (same? a b)
+  (if (and (node? a) (node? b))
+      (and (same? (node->left a)  (node->left b))
+           (same? (node->right a) (node->right b)))
+      (equal? a b)))
+
+; direct style samefringe
 (define (sameFringe a b)
-  (equal? (leaves a)
-          (leaves b)))
+  (same? (leaves a)
+         (leaves b)))
 
 ; generator
 (define (generateRightishTree size)
@@ -56,16 +63,17 @@
 ;; tests
 (define size 10000)
 
-(sameFringe  (Leaf 1)                                  (Leaf 1))
+(define (test name expected left right)
+  (display "running ") (display name) (newline)
+  (let ((actual (sameFringe left right)))
+    (if (eq? expected actual)
+        (begin (display "*SUCCESS*") (newline))
+        (begin (display "*FAILURE*") (newline))))) 
 
-(sameFringe  (Leaf 1)                                  (Leaf 2))
-
-(sameFringe  (Node (Leaf 1) (Node (Leaf 2) (Leaf 3)))  (Node (Node (Leaf 1) (Leaf 2)) (Leaf 3)))
-
-(sameFringe  (generateRightishTree size)              (generateRightishTree size))
-
-(sameFringe  (generateLeftishTree size)               (generateLeftishTree size))
-
-(sameFringe  (generateRightishTree size)              (generateLeftishTree size))
-
-(sameFringe  (generateLeftishTree size)               (generateRightishTree size))
+(test "same leaves"       #t   (Leaf 1)                                           (Leaf 1))
+(test "different leaves"  #f   (Leaf 1)                                           (Leaf 2))
+(test "same trees"        #t   (Node (Leaf 1) (Node (Leaf 2) (Leaf 3)))           (Node (Node (Leaf 1) (Leaf 2)) (Leaf 3)))
+(test "rightish/rightish" #t   (Node (Leaf 0) (Node (generateRightishTree size)   (Leaf 0))) (Node (Leaf 0) (Node (generateRightishTree size) (Leaf 0))))
+(test "leftish/leftish"   #t   (Node (Leaf 0) (Node (generateLeftishTree size)    (Leaf 0))) (Node (Leaf 0) (Node (generateLeftishTree size)  (Leaf 0))))
+(test "rightish/leftish"  #t   (Node (Leaf 0) (Node (generateRightishTree size)   (Leaf 0))) (Node (Leaf 0) (Node (generateLeftishTree size)  (Leaf 0))))
+(test "leftish/rightish"  #t   (Node (Leaf 0) (Node (generateLeftishTree size)    (Leaf 0))) (Node (Leaf 0) (Node (generateRightishTree size) (Leaf 0))))
