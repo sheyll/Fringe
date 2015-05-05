@@ -1,9 +1,13 @@
+#lang racket
+
 ;; functions
+
 (define (id x) x)
 
 (define (compose f g) (lambda (x) (f (g x))))
 
-; continuations
+;; continuations
+
 (define *depth* 0)
 (define *max-depth* 0)
 (define *ticks* 0)
@@ -14,13 +18,27 @@
   (set! *max-depth* (max *depth* *max-depth*))
   f)
 
+(define (bounce thunk)
+  (if (procedure? thunk)
+      (bounce (thunk))
+      thunk))
+
 (define (apply-cont k val)
   (set! *depth* (- *depth* 1))
   (set! *ticks* (+ *ticks* 1))
   (k val))
 
-(define (bounce thunk)
-  thunk)
+;; lists
+
+(define pair*? pair?)
+
+(define cons* cons)
+
+(define car* car)
+
+(define cdr* cdr)
+
+(define list* list)
 
 ;; binary tree
 
@@ -40,38 +58,43 @@
 
 (define node->right cdr)
 
-; CPS style concat
-(define (concatK l1 l2 k)
+; concat*
+; CPS style
+(define (concat*K l1 l2 k)
   (if (null? l1)
       (apply-cont k l2)
-      (concatK (cdr l1) l2 (build-cont (lambda (l3)
-                                         (apply-cont k (cons (car l1) l3)))))))
+      (concat*K (cdr* l1) l2 (build-cont (lambda (l3)
+                                           (apply-cont k (cons* (car* l1) l3)))))))
 
-; CPS style leaves
+; leaves
+; CPS style
 (define (leavesK x k)
   (cond ((leaf? x)
-         (apply-cont k (list (leaf->label x))))
+         (apply-cont k (list* (leaf->label x))))
         ((node? x)
          (leavesK (node->left x) (build-cont (lambda (l)
                                                (leavesK (node->right x) (build-cont (lambda (r)
-                                                                                      (concatK l r k))))))))))
+                                                                                      (concat*K l r k))))))))))
 
-; CPS style same?
+; same?
+; CPS style
 (define (same?K a b k)
-  (if (and (node? a) (node? b))
-      (same?K (node->left a) (node->left b) (build-cont (lambda (e?)
-                                                          (if e?
-                                                              (same?K (node->right a) (node->right b) k)
-                                                              (apply-cont k #f)))))
+  (if (and (pair*? a) (pair*? b))
+      (same?K (car* a) (car* b) (build-cont (lambda (e?)
+                                              (if e?
+                                                  (same?K (cdr* a) (cdr* b) k)
+                                                  (apply-cont k #f)))))
       (apply-cont k (equal? a b))))
 
-; CPS style samefringe
+; samefringe
+; CPS style
 (define (sameFringeK a b k)
   (leavesK a (build-cont (lambda (l1)
                            (leavesK b (build-cont (lambda (l2)
                                                     (same?K l1 l2 k))))))))
 
-; direct style samefringe
+; samefringe
+; direct style
 (define (sameFringe a b)
   (set! *depth* 0)
   (set! *max-depth* 0)
@@ -99,14 +122,26 @@
       (Leaf 0)))
 
 ;; tests
-(define size 10000)
+
+(define size 1000)
+
+(define (time f)
+  (let* ((start-time (current-milliseconds))
+         (result (f))
+         (end-time (current-milliseconds))
+         (elapsed-time (- end-time start-time)))
+    (display " elapsed time: ") (display (/ elapsed-time 1000.0)) (newline)
+    result))
 
 (define (test name expected left right)
   (display "running ") (display name) (newline)
-  (let ((actual (sameFringe left right)))
-    (if (eq? expected actual)
-        (begin (display "*SUCCESS*") (newline))
-        (begin (display "*FAILURE*") (newline))))) 
+  (time (lambda ()
+          (let ((actual (sameFringe left right)))
+            (if (eq? expected actual)
+                (begin (display "*SUCCESS*") (newline))
+                (begin (display "*FAILURE*") (newline))))))
+  (newline))
+
 
 (test "same leaves"       #t   (Leaf 1)                                           (Leaf 1))
 (test "different leaves"  #f   (Leaf 1)                                           (Leaf 2))

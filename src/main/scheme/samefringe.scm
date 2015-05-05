@@ -1,7 +1,24 @@
+#lang racket
+
 ;; functions
+
 (define (id x) x)
 
 (define (compose f g) (lambda (x) (f (g x))))
+
+;; continuations
+
+;; lists
+
+(define pair*? pair?)
+
+(define cons* cons)
+
+(define car* car)
+
+(define cdr* cdr)
+
+(define list* list)
 
 ;; binary tree
 
@@ -21,28 +38,35 @@
 
 (define node->right cdr)
 
-; direct style concat
-(define (concat l1 l2)
+; concat*
+; direct style
+(define (concat* l1 l2)
   (if(null? l1)
      l2
-     (cons (car l1) (concat (cdr l1) l2))))
+     (cons* (car* l1) (concat* (cdr* l1) l2))))
 
-; direct style leaves
+; leaves
+; direct style
 (define (leaves x)
   (cond ((leaf? x)
-         (list (leaf->label x)))
+         (list* (leaf->label x)))
         ((node? x)
-         (concat (leaves (node->left x))
-                 (leaves (node->right x))))))
+         (concat* (leaves (node->left x))
+                  (leaves (node->right x))))))
 
-; direct style same?
+; same?
+; direct style
 (define (same? a b)
-  (if (and (node? a) (node? b))
-      (and (same? (node->left a)  (node->left b))
-           (same? (node->right a) (node->right b)))
+  (if (and (pair*? a) (pair*? b))
+      (and (same? (car* a) (car* b))
+           (same? (cdr* a) (cdr* b)))
       (equal? a b)))
 
-; direct style samefringe
+; samefringe
+; CPS style
+
+; samefringe
+; direct style
 (define (sameFringe a b)
   (same? (leaves a)
          (leaves b)))
@@ -61,14 +85,26 @@
       (Leaf 0)))
 
 ;; tests
-(define size 10000)
+
+(define size 1000)
+
+(define (time f)
+  (let* ((start-time (current-milliseconds))
+         (result (f))
+         (end-time (current-milliseconds))
+         (elapsed-time (- end-time start-time)))
+    (display " elapsed time: ") (display (/ elapsed-time 1000.0)) (newline)
+    result))
 
 (define (test name expected left right)
   (display "running ") (display name) (newline)
-  (let ((actual (sameFringe left right)))
-    (if (eq? expected actual)
-        (begin (display "*SUCCESS*") (newline))
-        (begin (display "*FAILURE*") (newline))))) 
+  (time (lambda ()
+          (let ((actual (sameFringe left right)))
+            (if (eq? expected actual)
+                (begin (display "*SUCCESS*") (newline))
+                (begin (display "*FAILURE*") (newline))))))
+  (newline))
+
 
 (test "same leaves"       #t   (Leaf 1)                                           (Leaf 1))
 (test "different leaves"  #f   (Leaf 1)                                           (Leaf 2))
