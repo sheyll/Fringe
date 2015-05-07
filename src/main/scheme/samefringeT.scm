@@ -18,16 +18,16 @@
   (set! *max-depth* (max *depth* *max-depth*))
   f)
 
+(define (apply-cont k val)
+  (lambda ()
+    (set! *depth* (- *depth* 1))
+    (k val)))
+
 (define (bounce thunk)
   (set! *ticks* (+ *ticks* 1))
   (if (procedure? thunk)
       (bounce (thunk))
       thunk))
-
-(define (apply-cont k val)
-  (lambda ()
-    (set! *depth* (- *depth* 1))
-    (k val)))
 
 ;; binary tree
 

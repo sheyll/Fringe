@@ -3,11 +3,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>eu.lindenbaum.kata</groupId>
-  <artifactId>fringe</artifactId>
+  <artifactId>samefringe</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>fringe</name>
+  <name>samefringe</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -82,7 +82,7 @@
           </descriptors>
           <archive>
             <manifest>
-              <mainClass>eu.lindenbaum.kata.fringe.Main</mainClass>
+              <mainClass>eu.lindenbaum.kata.samefringe.SameFringe</mainClass>
             </manifest>
           </archive>
         </configuration>

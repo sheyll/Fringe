@@ -1,10 +1,12 @@
 package eu.lindenbaum.kata.fringe;
 
-import static eu.lindenbaum.kata.fringe.Tree.leaf;
-import static eu.lindenbaum.kata.fringe.Tree.node;
-import static eu.lindenbaum.kata.fringe.Tree.sameFringe;
+import static eu.lindenbaum.kata.samefringe.SameFringe.leaf;
+import static eu.lindenbaum.kata.samefringe.SameFringe.node;
+import static eu.lindenbaum.kata.samefringe.SameFringe.sameFringe;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import eu.lindenbaum.kata.samefringe.Tree;
 
 import org.junit.Ignore;
 import org.junit.Test;

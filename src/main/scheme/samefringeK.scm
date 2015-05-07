@@ -11,11 +11,6 @@
 (define (build-cont f)
   f)
 
-(define (bounce thunk)
-  (if (procedure? thunk)
-      (bounce (thunk))
-      thunk))
-
 (define (apply-cont k val)
   (k val))
 
@@ -74,9 +69,8 @@
 ; samefringe
 ; direct style
 (define (sameFringe a b)
-  (bounce
-   (sameFringeK a b (build-cont (lambda (answer)
-                                  answer)))))
+  (sameFringeK a b (build-cont (lambda (answer)
+                                  answer))))
 
 ; generator
 (define (generateRightishTree size)

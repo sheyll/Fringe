@@ -6,8 +6,6 @@
 
 (define (compose f g) (lambda (x) (f (g x))))
 
-;; continuations
-
 ;; binary tree
 
 ; leaf
@@ -26,12 +24,12 @@
 
 (define node->right cdr)
 
-; concat*
+; concat
 ; direct style
-(define (concat* l1 l2)
+(define (concat l1 l2)
   (if (null? l1)
       l2
-      (cons (car l1) (concat* (cdr l1) l2))))
+      (cons (car l1) (concat (cdr l1) l2))))
 
 ; leaves
 ; direct style
@@ -39,8 +37,8 @@
   (cond ((leaf? x)
          (cons (leaf->label x) '()))
         ((node? x)
-         (concat* (leaves (node->left x))
-                  (leaves (node->right x))))))
+         (concat (leaves (node->left x))
+                 (leaves (node->right x))))))
 
 ; same?
 ; direct style
