@@ -40,10 +40,10 @@
   (newline))
 
 
-;; tests
-(display implStyle) (newline)
-
 (define size 1000)
+
+;; tests
+(display "SameFringe [Scheme] ") (display implStyle) (newline)
 
 (test "same leaves" #t
       (Leaf 1)

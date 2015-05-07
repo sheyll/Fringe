@@ -90,6 +90,8 @@ public class SameFringe {
   }
 
   public static void main(String[] args) {
+    System.out.println("SameFringe [Java]");
+
     /////////////////////////////
     //           //            //
     //    .      //       .    //
