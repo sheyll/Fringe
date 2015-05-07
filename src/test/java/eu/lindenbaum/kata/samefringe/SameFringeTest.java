@@ -1,4 +1,4 @@
-package eu.lindenbaum.kata.fringe;
+package eu.lindenbaum.kata.samefringe;
 
 import static eu.lindenbaum.kata.samefringe.SameFringe.leaf;
 import static eu.lindenbaum.kata.samefringe.SameFringe.node;
