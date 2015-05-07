@@ -1,5 +1,3 @@
-package eu.lindenbaum.kata.samefringe;
-
 /**
  * Binary tree data structure with leaf node labels of type A.
  */

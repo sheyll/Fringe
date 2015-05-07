@@ -22,6 +22,9 @@ generateLeftishTree size =
   else
     Leaf 0
 
+yes = True
+no  = False
+
 size :: Int
 size = 1000
 
@@ -52,44 +55,44 @@ main :: IO ()
 main = do
   putStrLn "SameFringe [Haskell]"
 
-  (test "same leaves" True
+  (test "same leaves" yes
         (Leaf 1)
         (Leaf 1))
 
-  (test "different leaves" False
+  (test "different leaves" no
         (Leaf 1)
         (Leaf 2))
 
-  (test "same trees" True
+  (test "same trees" yes
         (Node (Leaf 1) (Node (Leaf 2) (Leaf 3)))
         (Node (Node (Leaf 1) (Leaf 2)) (Leaf 3)))
 
-  (test "rightish/rightish different first" False
+  (test "rightish/rightish different first" no
         (Node (Leaf 1) (Node (generateRightishTree size) (Leaf 0)))
         (Node (Leaf 0) (Node (generateRightishTree size) (Leaf 0))))
 
-  (test "leftish/leftish different first" False
+  (test "leftish/leftish different first" no
         (Node (Leaf 2) (Node (generateLeftishTree size)  (Leaf 0)))
         (Node (Leaf 0) (Node (generateLeftishTree size)  (Leaf 0))))
 
-  (test "rightish/leftish different first" False
+  (test "rightish/leftish different first" no
         (Node (Leaf 3) (Node (generateRightishTree size) (Leaf 0)))
         (Node (Leaf 0) (Node (generateLeftishTree size)  (Leaf 0))))
 
-  (test "leftish/rightish different first" False
+  (test "leftish/rightish different first" no
         (Node (Leaf 4) (Node (generateLeftishTree size)  (Leaf 0)))
         (Node (Leaf 0) (Node (generateRightishTree size) (Leaf 0))))
 
-  (test "rightish/rightish" True
+  (test "rightish/rightish" yes
         (Node (Leaf 0) (Node (generateRightishTree size) (Leaf 0)))
         (Node (Leaf 0) (Node (generateRightishTree size) (Leaf 0))))
 
-  (test "leftish/leftish" True
+  (test "leftish/leftish" yes
         (Node (Leaf 0) (Node (generateLeftishTree size)  (Leaf 0)))
         (Node (Leaf 0) (Node (generateLeftishTree size)  (Leaf 0))))
-  (test "rightish/leftish" True
+  (test "rightish/leftish" yes
         (Node (Leaf 0) (Node (generateRightishTree size) (Leaf 0)))
         (Node (Leaf 0) (Node (generateLeftishTree size)  (Leaf 0))))
-  (test "leftish/rightish" True
+  (test "leftish/rightish" yes
         (Node (Leaf 0) (Node (generateLeftishTree size)  (Leaf 0)))
         (Node (Leaf 0) (Node (generateRightishTree size) (Leaf 0))))

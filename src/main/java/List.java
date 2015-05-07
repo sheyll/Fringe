@@ -1,5 +1,3 @@
-package eu.lindenbaum.kata.samefringe;
-
 /**
  * Recursive list, made of zero or more elements of the type A.
  */
