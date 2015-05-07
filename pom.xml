@@ -82,7 +82,7 @@
           </descriptors>
           <archive>
             <manifest>
-              <mainClass>eu.lindenbaum.kata.samefringe.SameFringe</mainClass>
+              <mainClass>SameFringeTest</mainClass>
             </manifest>
           </archive>
         </configuration>

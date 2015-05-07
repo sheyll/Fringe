@@ -13,21 +13,102 @@ public class SameFringeTest {
     return new Tree.Node<>(left, right);
   }
 
-  private static Tree<String> generateLeftishTree(int leafCount) {
-    Tree<String> t = leaf(String.valueOf(0));
-    for (int i = 1; i < leafCount; i++) {
-      t = node(t, leaf(String.valueOf(i)));
+  /**
+   * Construct a tree, degenerated into a list going down to the right right
+   */
+  private static Tree<Integer> generateRightishTree(int leafCount) {
+    Tree<Integer> t = leaf(leafCount - 1);
+    for (int i = leafCount - 1; i-- > 0;) {
+      t = node(leaf(i), t);
     }
     return t;
   }
 
-  private static Tree<String> generateRightishTree(int leafCount) {
-    Tree<String> t = leaf(String.valueOf(leafCount - 1));
-    for (int i = leafCount - 1; i-- > 0;) {
-      t = node(leaf(String.valueOf(i)), t);
+  /**
+   * Construct a tree, degenerated into a list going down to the left
+   */
+  private static Tree<Integer> generateLeftishTree(int leafCount) {
+    Tree<Integer> t = leaf(0);
+    for (int i = 1; i < leafCount; i++) {
+      t = node(t, leaf(i));
     }
     return t;
   }
+
+//      yes = True
+//      no  = False
+//
+//      size :: Int
+//      size = 1000
+//
+//      time :: IO a -> IO a
+//      time f = do
+//        startTime <- getCurrentTime
+//        result <- f
+//        endTime <- getCurrentTime
+//        let elapsedTime = diffUTCTime endTime startTime in do
+//         putStrLn $ " elapsed time: " ++ show elapsedTime
+//         return result
+//
+//      test :: String -> Bool -> Tree Int -> Tree Int -> IO ()
+//      test name expected left right = do
+//        putStrLn $ " running test: " ++ name
+//        time $
+//          let actual = sameFringe left right in
+//           if expected == actual
+//           then do
+//             return ()
+//           else do
+//             putStrLn $ "expected: " ++ show expected
+//             putStrLn $ "actual:   " ++ show actual
+//             error "test failure"
+//        putStrLn ""
+//
+//      main :: IO ()
+//      main = do
+//        putStrLn "SameFringe [Haskell]"
+//
+//        (test "same leaves" yes
+//              (Leaf 1)
+//              (Leaf 1))
+//
+//        (test "different leaves" no
+//              (Leaf 1)
+//              (Leaf 2))
+//
+//        (test "same trees" yes
+//              (Node (Leaf 1) (Node (Leaf 2) (Leaf 3)))
+//              (Node (Node (Leaf 1) (Leaf 2)) (Leaf 3)))
+//
+//        (test "rightish/rightish different first" no
+//              (Node (Leaf 1) (Node (generateRightishTree size) (Leaf 0)))
+//              (Node (Leaf 0) (Node (generateRightishTree size) (Leaf 0))))
+//
+//        (test "leftish/leftish different first" no
+//              (Node (Leaf 2) (Node (generateLeftishTree size)  (Leaf 0)))
+//              (Node (Leaf 0) (Node (generateLeftishTree size)  (Leaf 0))))
+//
+//        (test "rightish/leftish different first" no
+//              (Node (Leaf 3) (Node (generateRightishTree size) (Leaf 0)))
+//              (Node (Leaf 0) (Node (generateLeftishTree size)  (Leaf 0))))
+//
+//        (test "leftish/rightish different first" no
+//              (Node (Leaf 4) (Node (generateLeftishTree size)  (Leaf 0)))
+//              (Node (Leaf 0) (Node (generateRightishTree size) (Leaf 0))))
+//
+//        (test "rightish/rightish" yes
+//              (Node (Leaf 0) (Node (generateRightishTree size) (Leaf 0)))
+//              (Node (Leaf 0) (Node (generateRightishTree size) (Leaf 0))))
+//
+//        (test "leftish/leftish" yes
+//              (Node (Leaf 0) (Node (generateLeftishTree size)  (Leaf 0)))
+//              (Node (Leaf 0) (Node (generateLeftishTree size)  (Leaf 0))))
+//        (test "rightish/leftish" yes
+//              (Node (Leaf 0) (Node (generateRightishTree size) (Leaf 0)))
+//              (Node (Leaf 0) (Node (generateLeftishTree size)  (Leaf 0))))
+//        (test "leftish/rightish" yes
+//              (Node (Leaf 0) (Node (generateLeftishTree size)  (Leaf 0)))
+//              (Node (Leaf 0) (Node (generateRightishTree size) (Leaf 0))))
 
   public static void main(String[] args) {
     System.out.println("SameFringe [Java]");
