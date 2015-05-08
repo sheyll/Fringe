@@ -1,4 +1,5 @@
 module SameFringe ( Tree(..)
+                  , leaves
                   , sameFringe
                   )
        where

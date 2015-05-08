@@ -25,10 +25,10 @@ data Tree a = Leaf a
 
 leaves :: (Eq a, NFData a) => Tree a -> [a]
 leaves (Leaf x)   = [x]
-leaves (Node l r) = leaves l ++ leaves r
+leaves (Node l r) = leaves l ++|| leaves r
 
 sameFringe :: (Eq a, NFData a) => Tree a -> Tree a -> Bool
-sameFringe l r = leaves l == leaves r
+sameFringe l r = leaves l ==|| leaves r
 
 -- The properties that the test asserts:
 
@@ -41,7 +41,7 @@ symmetric :: TestTree -> TestTree -> Bool
 symmetric l r = sameFringe l r ==|| sameFringe r l
 
 isomorph :: TestTree -> TestTree -> Bool
-isomorph l r = (l == r) ==|| sameFringe l r
+isomorph l r = (l ==|| r) ==|| sameFringe l r
 
 -- quickcheck instance
 
