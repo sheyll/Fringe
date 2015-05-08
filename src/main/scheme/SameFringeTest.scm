@@ -90,6 +90,16 @@
       (Node (Leaf 0) (Node (generateLeftishTree size)  (Leaf 0)))
       (Node (Leaf 0) (Node (generateRightishTree size) (Leaf 0))))
 
-(do ((i 0 (+ i 1))
-     ((<= i 100))
-     '()))
+;      int size = 1000 * i;
+;      test("leftish/leftish " + size, yes, //
+;           Node(Leaf(0), Node(generateLeftishTree(size), Leaf(0))),
+;           Node(Leaf(0), Node(generateLeftishTree(size), Leaf(0))));
+
+(do ((i 0 (+ i 1)))
+     ((> i 100))
+  (let ((size (* 1000 i)))
+    (test (string-append "leftish/leftish " (number->string size)) yes
+          (Node (Leaf 0) (Node (generateLeftishTree size)  (Leaf 0)))
+          (Node (Leaf 0) (Node (generateLeftishTree size)  (Leaf 0))))))
+
+
