@@ -22,12 +22,6 @@ generateLeftishTree size =
   else
     Leaf 0
 
-yes = True
-no  = False
-
-size :: Int
-size = 1000
-
 time :: IO a -> IO a
 time f = do
   startTime <- getCurrentTime
@@ -50,6 +44,12 @@ test name expected left right = do
        putStrLn $ "actual:   " ++ show actual
        error "test failure"
   putStrLn ""
+
+yes = True
+no  = False
+
+size :: Int
+size = 1000
 
 main :: IO ()
 main = do
